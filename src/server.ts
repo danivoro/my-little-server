@@ -40,11 +40,29 @@ app.get("/hits", (req, res) => {
   });
 });
 
+app.get("/hello-world", (req, res) => {
+  serverHitCount += 1;
+  res.json({
+    english: "Hello world!",
+    esperanto: "Saluton mondo!",
+    hawaiian: "Aloha Honua",
+    turkish: "Merhaba Dünya!",
+  });
+});
+
 app.get("/hits-stealth", (req, res) => {
   res.json({
     note: "Oooh, you ninja. We didn't count that hit.",
     currentTotal: serverHitCount,
     countedAsHit: false,
+  });
+});
+
+app.get("/ponies/random", (req, res) => {
+  const randomPonyIndex = Math.floor(Math.random() * ponyData.members.length);
+  const randomPony = ponyData.members[randomPonyIndex];
+  res.json({
+    pony: randomPony,
   });
 });
 
@@ -72,7 +90,7 @@ app.get("/season-one/random", (req, res) => {
 });
 
 // using 4000 by convention, but could be changed
-const PORT_NUMBER = 4000;
+const PORT_NUMBER = 4001;
 
 app.listen(PORT_NUMBER, () => {
   console.log(
