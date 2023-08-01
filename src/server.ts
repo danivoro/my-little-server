@@ -7,6 +7,21 @@ const app = express();
 const serverStartDate = new Date();
 let serverHitCount = 0;
 
+//Array for storing the running route history of the server
+
+const routeHistory: string[] = [];
+
+//Function for storing the route history
+
+app.use((req, res, next) => {
+  routeHistory.push(req.path);
+  next();
+});
+
+app.get("/history", (req, res) => {
+  res.json({ routeHistory });
+});
+
 app.get("/", (req, res) => {
   res.send(
     "This is the default path - and it isn't very interesting, sorry. \nTry visiting localhost:4000/creation-time, localhost:4000/current-time"
